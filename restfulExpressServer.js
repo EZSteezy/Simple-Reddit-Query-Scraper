@@ -1,5 +1,5 @@
-dotenv.config()
 'use strict';
+dotenv.config()
 const { Pool } = require('pg');
 const express = require('express');
 const app = express();
