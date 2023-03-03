@@ -2,7 +2,7 @@
 const { Pool } = require('pg');
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 10000; // port that Express will listen to for requests
+const port = process.env.PORT || 8000; // port that Express will listen to for requests
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 
 // use DATABASE_HOST environmental variable if it exists (set by docker compose),
 // or default to localhost if no value is set (run outside docker) 
-const DB_HOST = process.env.DATABASE_HOST || 'https://stevesmovies.onrender.com';
+const DB_HOST = process.env.DATABASE_HOST || '127.0.0.1';
 
 const pool = new Pool({
   user: 'postgres',
