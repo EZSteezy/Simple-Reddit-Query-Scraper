@@ -17,7 +17,7 @@ services:
         
         # map the ports <outside container>:<inside container>
         ports:
-            - "8000:8000"
+            - "10000:10000"
             
         # make sure the postgres-db service starts first
         depends_on:
@@ -29,14 +29,14 @@ services:
             DATABASE_HOST: "postgres-db"
 
         # Override the entrypoint in the Dockerfile
-        command: ["nodemon", "expressServer.js"]
+        command: ["nodemon", "restfulExpressServer.js"]
 
     postgres-db:
         container_name: postgres-db
         image: postgres:latest
         restart: always
         environment:
-            DATABASE_HOST: 127.0.0.1
+            DATABASE_HOST: https://stevesmovies.onrender.com
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: password
             POSTGRES_PORT: 5432

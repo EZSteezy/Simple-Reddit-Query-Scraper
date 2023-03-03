@@ -2,7 +2,7 @@
 const { Pool } = require('pg');
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 8000; // port that Express will listen to for requests
+const port = process.env.PORT || 10000; // port that Express will listen to for requests
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
