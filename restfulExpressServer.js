@@ -12,14 +12,14 @@ app.use(bodyParser.json());
 
 // use DATABASE_HOST environmental variable if it exists (set by docker compose),
 // or default to localhost if no value is set (run outside docker) 
-const DB_HOST = process.env.DATABASE_HOST || 'localhost';
+
 
 const pool = new Pool({
-  user: 'postgres',
-  host: DB_HOST,
-  database: 'movies',
-  password: 'password',
-  port: 10000,
+  user: 'stevesmoviesdb_user',
+  host: dpg-cg14da5269vfsnr41oi0-a,
+  database: 'stevesmoviesdb',
+  password: 'uozZg5baXPLH2JTdVejgTCUUKDFX8fID',
+  port: 5432,
 });
 
 
