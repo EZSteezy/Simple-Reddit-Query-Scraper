@@ -31,7 +31,7 @@ const pool = new Pool({
   password: 'uozZg5baXPLH2JTdVejgTCUUKDFX8fID',
   port: 5432,
 });
-dpg
+
 // GET request to /movies - Read all the movies
 app.get('/api/movies', (req, res, next) => {
   // Get all the rows in movies table
