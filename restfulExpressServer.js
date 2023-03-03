@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 // use DATABASE_HOST environmental variable if it exists (set by docker compose),
 // or default to localhost if no value is set (run outside docker) 
-const DB_HOST = process.env.DATABASE_HOST || 'https://stevesmovies.onrender.com';
+const DB_HOST = process.env.DATABASE_HOST || 'localhost';
 
 const pool = new Pool({
   user: 'postgres',
