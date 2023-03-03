@@ -1,0 +1,13 @@
+CREATE TABLE genres (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) UNIQUE NOT NULL
+);
+
+
+CREATE TABLE movies (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  genre VARCHAR(255) NOT NULL,
+  score INT NOT NULL,
+  FOREIGN KEY (genre) REFERENCES genres(name)
+);
