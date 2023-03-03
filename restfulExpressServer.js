@@ -12,17 +12,26 @@ app.use(bodyParser.json());
 
 // use DATABASE_HOST environmental variable if it exists (set by docker compose),
 // or default to localhost if no value is set (run outside docker) 
+/*const DB_HOST = process.env.DATABASE_HOST || 'localhost';
 
+const pool = new Pool({
+  user: 'postgres',
+  host: DB_HOST,
+  database: 'movies',
+  password: 'password',
+  port: 5432,
+});
+*/
+const DB_HOST = process.env.DATABASE_HOST || 'dpg-cg14da5269vfsnr41oi0-a';
 
 const pool = new Pool({
   user: 'stevesmoviesdb_user',
-  host: dpg-cg14da5269vfsnr41oi0-a,
+  host: DB_HOST,
   database: 'stevesmoviesdb',
   password: 'uozZg5baXPLH2JTdVejgTCUUKDFX8fID',
   port: 5432,
 });
-
-
+dpg
 // GET request to /movies - Read all the movies
 app.get('/api/movies', (req, res, next) => {
   // Get all the rows in movies table
