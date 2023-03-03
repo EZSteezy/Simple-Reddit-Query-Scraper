@@ -36,7 +36,7 @@ services:
         image: postgres:latest
         restart: always
         environment:
-            DATABASE_HOST: 127.0.0.1
+            DATABASE_HOST: localhost
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: password
             POSTGRES_PORT: 5432
