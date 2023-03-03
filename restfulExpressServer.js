@@ -19,7 +19,7 @@ const pool = new Pool({
   host: DB_HOST,
   database: 'movies',
   password: 'password',
-  port: 5432,
+  port: 10000,
 });
 
 
