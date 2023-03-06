@@ -5,7 +5,7 @@ services:
     # the name of the service
     express-service:
         # shorthand name for the container
-        container_name: restful-moviesdb
+        container_name: restful-queriesdb
         
         # build path to the Dockerfile
         build: .
