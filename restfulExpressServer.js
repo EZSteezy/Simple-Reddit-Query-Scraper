@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 
 // use DATABASE_HOST environmental variable if it exists (set by docker compose),
 // or default to localhost if no value is set (run outside docker) 
+
 /*const DB_HOST = process.env.DATABASE_HOST || 'localhost';
 
 const pool = new Pool({
@@ -22,20 +23,20 @@ const pool = new Pool({
   port: 5432,
 });
 */
-const DB_HOST = process.env.DATABASE_HOST || 'dpg-cg14da5269vfsnr41oi0-a';
+const DB_HOST = process.env.DATABASE_HOST || 'dpg-cg3423l269v3bp87jh5g-a';
 
 const pool = new Pool({
-  user: 'stevesmoviesdb_user',
+  user: 'queries_225t_user',
   host: DB_HOST,
-  database: 'stevesmoviesdb',
-  password: 'uozZg5baXPLH2JTdVejgTCUUKDFX8fID',
+  database: 'queries_225t',
+  password: 'fAXGDT7MNFG56GeeSEIRVBpKLz3Vnd6z',
   port: 5432,
 });
 
 // GET request to /movies - Read all the movies
-app.get('/api/movies', (req, res, next) => {
+app.get('/api/queries', (req, res, next) => {
   // Get all the rows in movies table
-  pool.query('SELECT * FROM movies', (err, result) => {
+  pool.query('SELECT * FROM queries', (err, result) => {
     if (err){
       return next(err);
     }
@@ -47,96 +48,92 @@ app.get('/api/movies', (req, res, next) => {
 });
 
 // GET request to /movies/:id - Read one movie
-app.get('/api/movies/:id', (req, res, next) => {
+app.get('/api/queries/:id', (req, res, next) => {
   // Get a single movie from the table
   const id = Number.parseInt(req.params.id);
   if (!Number.isInteger(id)){
-    res.status(404).send("No movie found with that ID");
+    res.status(404).send("No query found with that ID");
   }
-  console.log("movie ID: ", id);
+  console.log("query ID: ", id);
   
-  pool.query('SELECT * FROM movies WHERE id = $1', [id], (err, result) => {
+  pool.query('SELECT * FROM queries WHERE id = $1', [id], (err, result) => {
     if (err){
       return next(err);
     }
     
-    const movie = result.rows[0];
-    console.log("Single movie ID", id, "values:", movie);
-    if (movie){
-      return res.send(movie);
+    const query = result.rows[0];
+    console.log("Single query ID", id, "values:", query);
+    if (query){
+      return res.send(query);
     } else {
-      return res.status(404).send("No movie found with that ID");
+      return res.status(404).send("No query found with that ID");
     }
   });
 });
 
 // POST to /movies - Create a movie
-app.post('/api/movies', (req, res, next) => {
-  const score = Number.parseInt(req.body.score);
-  const {name, genre} = req.body;
-  console.log("Request body name, genre, score", name, genre, score);
+app.post('/api/queries', (req, res, next) => {
+  const {name} = req.body;
+  console.log("Request body name", name);
   // check request data - if everything exists and score is a number
-  if (name && genre && score && !Number.isNaN(score)){
-    pool.query('INSERT INTO movies (name, genre, score) VALUES ($1, $2, $3) RETURNING *', [name, genre, score], (err, data) => {
-      const movie = data.rows[0];
-      console.log("Created Movie: ", movie);
-      if (movie){
-        return res.send(movie);
+  if (name){
+    pool.query('INSERT INTO queries (name) VALUES ($1) RETURNING *', [name], (err, data) => {
+      const query = data.rows[0];
+      console.log("Created query: ", query);
+      if (query){
+        return res.send(query);
       } else {
         return next(err);
       }
     });
 
   } else {
-    return res.status(400).send("Unable to create movie from request body");
+    return res.status(400).send("Unable to create query from request body");
   }
 
 });
 
 
 // PATCH to /movies/:id - Update a movie
-app.patch('/api/movies/:id', (req, res, next) => {
+app.patch('/api/queries/:id', (req, res, next) => {
   // parse id from URL
   const id = Number.parseInt(req.params.id);
   // get data from request body
-  const score = Number.parseInt(req.body.score);
-  const {name, genre} = req.body;
+  const {name} = req.body;
   // if id input is ok, make DB call to get existing values
   if (!Number.isInteger(id)){
-    res.status(400).send("No movie found with that ID");
+    res.status(400).send("No query found with that ID");
   }
-  console.log("MovieID: ", id);
+  console.log("QueryID: ", id);
   // get current values of the movie with that id from DB
-  pool.query('SELECT * FROM movies WHERE id = $1', [id], (err, result) => {
+  pool.query('SELECT * FROM queries WHERE id = $1', [id], (err, result) => {
     if (err){
       return next(err);
     }
-    console.log("request body name, score, genre: ", name, score, genre);
-    const movie = result.rows[0];
-    console.log("Single Movie ID from DB", id, "values:", movie);
-    if (!movie){
-      return res.status(404).send("No movie found with that ID");
+    console.log("request body name: ", name);
+    const query = result.rows[0];
+    console.log("Single query ID from DB", id, "values:", query);
+    if (!query){
+      return res.status(404).send("No query found with that ID");
     } else {
       // check which values are in the request body, otherwise use the previous movie values
       // let updatedName = null; 
-      const updatedName = name || movie.name; 
+      const updatedName = name || query.name; 
       // if (name){
       //   updatedName = name;
       // } else {
       //   updatedName = movies.name;
       // }
-      const updatedGenre = genre || movie.genre;
-      const updatedScore = score || movie.score;
 
-      pool.query('UPDATE movies SET name=$1, genre=$2, score=$3 WHERE id = $4 RETURNING *', 
-          [updatedName, updatedGenre, updatedScore, id], (err, data) => {
+      pool.query('UPDATE queries SET name=$1 WHERE id = $2 RETURNING *', 
+          [updatedName, id], (err, data) => {
         
         if (err){
           return next(err);
         }
-        const updatedMovie = data.rows[0];
-        console.log("updated row:", updatedMovie);
-        return res.send(updatedMovie);
+        const updatedQuery = data.rows[0];
+        console.log("updated row:", updatedQuery);
+        return res.send(updatedQuery);
       });
     }    
   });
@@ -144,24 +141,24 @@ app.patch('/api/movies/:id', (req, res, next) => {
 
 
 // DELETE to /movies/:id - Delete a movie
-app.delete("/api/movies/:id", (req, res, next) => {
+app.delete("/api/queries/:id", (req, res, next) => {
   const id = Number.parseInt(req.params.id);
   if (!Number.isInteger(id)){
-    return res.status(400).send("No movie found with that ID");
+    return res.status(400).send("No query found with that ID");
   }
 
-  pool.query('DELETE FROM movies WHERE id = $1 RETURNING *', [id], (err, data) => {
+  pool.query('DELETE FROM queries WHERE id = $1 RETURNING *', [id], (err, data) => {
     if (err){
       return next(err);
     }
     
-    const deletedMovie = data.rows[0];
-    console.log(deletedMovie);
-    if (deletedMovie){
+    const deletedQuery = data.rows[0];
+    console.log(deletedQuery);
+    if (deletedQuery){
       // respond with deleted row
-      res.send(deletedMovie);
+      res.send(deletedQuery);
     } else {
-      res.status(404).send("No movie found with that ID");
+      res.status(404).send("No query found with that ID");
     }
   });
 });
