@@ -24,7 +24,8 @@ var data = JSON.stringify({ "query": query });
 // send the post request with the data
 $.post("/my/api/endpoint", data, function(response) {
   console.log(response);
-  console.log(queryObj);
+  console.log(data);
+  console.log(query);
     // handle the response from the server here
 });
 }
