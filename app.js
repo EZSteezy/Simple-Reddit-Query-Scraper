@@ -3,6 +3,7 @@ let queryArr = [];
 
 $('#submitBtn').on('click', getStr);
 $('#submitBtn2').on('click', postQuery);
+$('#submitBtn3').on('click', deleteQuery);
 
 function getStr() {
   $(document).ready(function () {
@@ -28,20 +29,40 @@ function postQuery() {
     data: data,
     contentType: "application/json",
     dataType: "json",
-    success: function(response) {
+    success: function (response) {
       console.log(response);
       console.log(data);
       console.log(query);
       location.reload()
       // handle the response from the server here
     },
-    error: function(xhr, status, error) {
+    error: function (xhr, status, error) {
       console.log("Error: " + error);
     }
   });
 
 }
 
+function deleteQuery() {
+  var queryId = $("#queryInput").val();
+  // define the data to be sent in the post request as a raw JSON object
+  // send the post request with the data
+
+  $.ajax({
+    url: "https://query-page.onrender.com/api/queries/" + queryId,
+    type: "DELETE",
+    success: function (response) {
+      console.log(response);
+      console.log(queryId);
+      location.reload()
+      // handle the response from the server here
+    },
+    error: function (xhr, status, error) {
+      console.log("Error: " + error);
+    }
+  });
+
+}
 
 function getQueries() {
   const savedQueries = {
@@ -59,13 +80,14 @@ function getQueries() {
 
     $.each(queryData, function (i) {
       $(document).ready(function () {
-        $("#saved-queries").append("<div>" + queryData[i]['query'] + "</div>");
+        $("#saved-queries").append("<div>" + queryData[i]['query'] + ' | ID: ' + queryData[i]['id'] + "</div>");
+
         queryArr.push(queryData[i]['query'])
       })
     })
     console.log(queryArr)
   })
-  
+
 }
 
 getQueries()
