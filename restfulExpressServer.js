@@ -79,6 +79,7 @@ app.get('/api/queries/:id', (req, res, next) => {
 // POST to /movies - Create a movie
 app.post('/api/queries', (req, res, next) => {
   const { query } = req.body;
+  console.log(req);
   console.log("Request body", query);
   // check request data - if everything exists
   if (query) {
