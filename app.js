@@ -3,7 +3,6 @@ let queryArr = [];
 
 $('#submitBtn').on('click', getStr);
 $('#submitBtn2').on('click', postQuery);
-$('#submitBtn3').on('click', deleteQuery);
 
 function getStr() {
   $(document).ready(function () {
@@ -42,6 +41,7 @@ function postQuery() {
   });
 
 }
+
 
 function getQueries() {
   const savedQueries = {
