@@ -18,17 +18,28 @@ function getStr() {
 };
 
 function postQuery() {
-var query = $("#queryInput").val();
-// define the data to be sent in the post request as a raw JSON object
-var data = JSON.stringify({ "query": query });
-// send the post request with the data
-$.post("https://query-page.onrender.com/api/queries/", data, function(response) {
-  console.log(response);
-  console.log(data);
-  console.log(query);
-    // handle the response from the server here
-});
+  var query = $("#queryInput").val();
+  // define the data to be sent in the post request as a raw JSON object
+  var data = JSON.stringify({ "query": query });
+  // send the post request with the data
+
+  $.post({
+    url: "https://query-page.onrender.com/api/queries/",
+    data: data,
+    contentType: "application/json",
+    dataType: "json",
+    success: function(response) {
+      console.log(response);
+      console.log(data);
+      console.log(query);
+      // handle the response from the server here
+    },
+    error: function(xhr, status, error) {
+      console.log("Error: " + error);
+    }
+  });
 }
+
 
 function getQueries() {
   const savedQueries = {
