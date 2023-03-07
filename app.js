@@ -16,14 +16,17 @@ function getStr() {
     //getResults()
   });
 };
+
 function postQuery() {
-  let queryStr = $("#queryInput").val();
-  let queryObj = { "query": queryStr };
+var query = $("#queryInput").val();
+// define the data to be sent in the post request as a raw JSON object
+var data = JSON.stringify({ "query": query });
+// send the post request with the data
+$.post("/my/api/endpoint", data, function(response) {
+  console.log(response);
   console.log(queryObj);
-  $.post('https://query-page.onrender.com/api/queries/', JSON.stringify(queryObj), function (response) {
-    console.log(response);
-    console.log(queryObj);
-  });
+    // handle the response from the server here
+});
 }
 
 function getQueries() {
