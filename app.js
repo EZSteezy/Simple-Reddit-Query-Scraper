@@ -17,12 +17,14 @@ function getStr() {
   });
 };
 function postQuery() {
-  inputQuery = $("#queryInput").val()
-  $.post('https://query-page.onrender.com/api/queries/', {data: 'inputQuery'}, function(response) {
+  var queryStr = $("#queryInput").val();
+  var queryObj = { "query": queryStr };
+
+  $.post('https://query-page.onrender.com/api/queries/', queryObj, function (response) {
     console.log(response);
-    console.log(inputQuery);
+    console.log(queryObj);
   });
-  }
+}
 
 function getQueries() {
   const savedQueries = {
