@@ -8,10 +8,16 @@ body {
 }
 
 #main {
+  background-image: url(https://wallpapercave.com/wp/wp6630058.gif);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: auto;
+  background-color: #464646;
   width: 700px;
   font-family: "Arima Madurai", cursive;
   background-color: rgb(23, 118, 49);
-  opacity: 80%;
+  opacity: 75%;
   margin: auto;
   border-radius: 30px;
   text-align: center;
@@ -57,7 +63,7 @@ body {
 
 
 #header {
-  background: url(https://i.gifer.com/origin/fd/fdd2726c56e7d9cd95ad83bef3365f38_w200.gif);
+  background: url(https://thumbs.gfycat.com/EarlyAntiqueIbizanhound-max-1mb.gif);
   background-size: cover;
   background-position: center;
   
