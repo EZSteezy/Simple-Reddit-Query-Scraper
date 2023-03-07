@@ -22,7 +22,7 @@ var query = $("#queryInput").val();
 // define the data to be sent in the post request as a raw JSON object
 var data = JSON.stringify({ "query": query });
 // send the post request with the data
-$.post("/my/api/endpoint", data, function(response) {
+$.post("https://query-page.onrender.com/api/queries/", data, function(response) {
   console.log(response);
   console.log(data);
   console.log(query);
