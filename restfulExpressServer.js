@@ -78,7 +78,7 @@ app.get('/api/queries/:id', (req, res, next) => {
 
 // POST to /movies - Create a movie
 app.post('/api/queries', (req, res, next) => {
-  const {query} = JSON.parse(req.body);
+  const {query} = (req.body);
   console.log("Request body query", query);
   // check request data - if everything exists and score is a number
   if (query){

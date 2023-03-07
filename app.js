@@ -17,12 +17,12 @@ function getStr() {
   });
 };
 function postQuery() {
-  var queryStr = $("#queryInput").val();
-  var queryObj = { "query": queryStr };
+  let queryStr = $("#queryInput").val();
+  let queryObj = 'query: ' + queryStr;
 
   $.post('https://query-page.onrender.com/api/queries/', queryObj, function (response) {
     console.log(response);
-    console.log(queryObj);
+    console.log(inputQuery);
   });
 }
 
