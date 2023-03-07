@@ -23,7 +23,7 @@ function postQuery() {
   $.post('https://query-page.onrender.com/api/queries/', JSON.stringify(queryObj), function (response) {
     console.log(response);
     console.log(queryObj);
-  }, 'json');
+  });
 }
 
 function getQueries() {
