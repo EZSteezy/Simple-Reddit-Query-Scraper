@@ -1,15 +1,28 @@
 let inputStr;
+let queryArr = [];
 
 $('#submitBtn').on('click', getStr);
+$('#submitBtn2').on('click', postQuery);
 
 function getStr() {
   $(document).ready(function () {
     $('body2').empty()
-    inputStr = $("#searchInput").val();
+    //inputStr = $("#searchInput").val();
     // for each table result from db queries saved, perform below func
-    getResults()
+    for (let i = 0; i < queryArr.length; i++) {
+      inputStr = queryArr[i];
+      getResults()
+    }
+    //getResults()
   });
 };
+function postQuery() {
+  inputQuery = $("#queryInput").val()
+  $.post('https://query-page.onrender.com/api/queries/', {data: 'inputQuery'}, function(response) {
+    console.log(response);
+    console.log(inputQuery);
+  });
+  }
 
 function getQueries() {
   const savedQueries = {
@@ -19,11 +32,20 @@ function getQueries() {
     "method": "GET",
     "headers": {}
   };
-$.get(savedQueries, (data) => {
-  let stringData = JSON.stringify(data);
-  let queryData = JSON.parse(stringData);
-  console.log(queryData);
-})
+  $.get(savedQueries, (data) => {
+    let stringData = JSON.stringify(data);
+    let queryData = JSON.parse(stringData);
+    console.log(queryData);
+
+
+    $.each(queryData, function (i) {
+      $(document).ready(function () {
+        $("#saved-queries").append("<div>" + queryData[i]['query'] + "</div>");
+        queryArr.push(queryData[i]['query'])
+      })
+    })
+    console.log(queryArr)
+  })
 }
 
 getQueries()
@@ -45,30 +67,30 @@ function getResults() {
     $.each(results['data']['children'], function (i) {
 
       $(document).ready(function () {
-
+        let id = results['data']['children'][i]['data']['id']
         jQuery('<div/>', {
-          id: "showname" + i,
+          id: id,
           class: "showclass",
           text: results['data']['children'][i]['data']['title']
         }).appendTo('body2');
 
         jQuery('<div/>', {
-          id: 'morename' + i,
+          id: 'morename' + id,
           class: 'moreclass',
           text: 'view here...'
-        }).appendTo($('#showname' + i));
+        }).appendTo($('#' + id));
 
-        $('#morename' + i).contents().wrap('<a href=https://www.reddit.com/' + results['data']['children'][i]['data']['permalink'] + '" target="_blank"></a>');
+        $('#morename' + id).contents().wrap('<a href=https://www.reddit.com/' + results['data']['children'][i]['data']['permalink'] + '" target="_blank"></a>');
 
-let utcSeconds = results['data']['children'][i]['data']['created']
-let newDate = new Date(0);
-newDate.setUTCSeconds(utcSeconds)
+        let utcSeconds = results['data']['children'][i]['data']['created']
+        let newDate = new Date(0);
+        newDate.setUTCSeconds(utcSeconds)
 
         jQuery('<div/>', {
           id: "channelname" + i,
           class: "channelclass",
           text: 'Time/Date Posted: ' + newDate
-        }).appendTo($("#showname" + i));
+        }).appendTo($("#" + id));
 
       });
 
@@ -76,57 +98,3 @@ newDate.setUTCSeconds(utcSeconds)
 
   });
 }
-/*
-        jQuery('<div/>', {
-          id: "channelname" + i,
-          class: "channelclass",
-          text: 'Channel: ' + results.contents[i]['video']['channelName']
-        }).appendTo($("#showname" + i));
-
-        jQuery('<div/>', {
-          id: 'morename' + i,
-          class: 'moreclass',
-          text: 'watch here...'
-        }).appendTo($('#showname' + i));
-
-        $('#morename' + i).contents().wrap('<a href=https://www.youtube.com/watch?v=' + results.contents[i]['video']['videoId'] + '" target="_blank"></a>');
-
-        var img = $('<img />', {
-          id: 'imgid',
-          src: results.contents[i]['video']['thumbnails'][0]['url']
-        }); img.appendTo($('#showname' + i));
-
-        jQuery('<a/>', {
-          href: '#',
-          id: 'dlname',
-          class: 'dlclass' + i
-        })
-          .text('download')
-          .appendTo($('#showname' + i));
-
-        $(".dlclass" + i).click(function () {
-          const videoId = results.contents[i]['video']['videoId'];
-          getDownload(videoId);
-          return false;
-        });
-      });
-
-      function getDownload(videoId) {
-        const settings2 = {
-          "async": true,
-          "crossDomain": true,
-          "url": 'https://ytstream-download-youtube-videos.p.rapidapi.com/dl?id=' + videoId,
-          "method": "GET",
-          "headers": {
-            "X-RapidAPI-Key": "23a647df49msh11266a68daf3297p10456ejsncf98c1f93b4f",
-            "X-RapidAPI-Host": "ytstream-download-youtube-videos.p.rapidapi.com"
-          }
-        };
-
-        $.get(settings2, (data) => {
-          let stringData2 = JSON.stringify(data);
-          let results2 = JSON.parse(stringData2);
-          const url = results2.formats[results2.formats.length - 1].url
-          window.open(url, "_blank");
-        });
-      }*/

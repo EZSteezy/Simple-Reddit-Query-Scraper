@@ -10,7 +10,7 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
@@ -78,11 +78,11 @@ app.get('/api/queries/:id', (req, res, next) => {
 
 // POST to /movies - Create a movie
 app.post('/api/queries', (req, res, next) => {
-  const {name} = req.body;
-  console.log("Request body name", name);
+  const {query} = req.body;
+  console.log("Request body query", query);
   // check request data - if everything exists and score is a number
-  if (name){
-    pool.query('INSERT INTO queries (name) VALUES ($1) RETURNING *', [name], (err, data) => {
+  if (query){
+    pool.query('INSERT INTO queries (query) VALUES ($1) RETURNING *', [query], (err, data) => {
       const query = data.rows[0];
       console.log("Created query: ", query);
       if (query){
