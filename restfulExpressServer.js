@@ -8,7 +8,12 @@ const port = process.env.PORT || 8000; // port that Express will listen to for r
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
-
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
 
 // use DATABASE_HOST environmental variable if it exists (set by docker compose),
 // or default to localhost if no value is set (run outside docker) 

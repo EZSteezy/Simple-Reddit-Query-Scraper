@@ -1,0 +1,75 @@
+body {
+  background-image: url(https://i.imgur.com/8YMFRxH.gif);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: #464646;
+}
+
+#main {
+  width: 700px;
+  font-family: "Arima Madurai", cursive;
+  background-color: rgb(23, 118, 49);
+  opacity: 80%;
+  margin: auto;
+  border-radius: 30px;
+  text-align: center;
+  padding: 40px;
+  color: rgba(56, 130, 179, 0.836);
+}
+#main2 {
+  width: 500px;
+  font-family: "Arima Madurai", cursive;
+  background-color: rgb(23, 118, 49);
+  opacity: 80%;
+  margin: auto;
+  border-radius: 15px;
+  text-align: center;
+  padding: 0px;
+  color: rgba(56, 130, 179, 0.836);
+}
+
+.showclass {
+  width: 400px;
+  font-family: "Arima Madurai", cursive;
+  background-color: rgb(147, 219, 157);
+  opacity: 80%;
+  margin: auto;
+  margin-top: 30px;
+  border-radius: 20px;
+  border: 5px solid;
+  padding: 2px;
+  text-align: center;
+}
+
+#imgid {
+  width: 300px;
+  background-color: whitesmoke;
+  margin: auto;
+  margin-top: 0px;
+  border-radius: 0px;
+  padding: 0px;
+  border: 2px solid;
+  display: flex;
+  justify-content: center;
+}
+
+
+#header {
+  background: url(https://i.gifer.com/origin/fd/fdd2726c56e7d9cd95ad83bef3365f38_w200.gif);
+  background-size: cover;
+  background-position: center;
+  
+  -webkit-background-clip: text;
+  color: transparent; // set to transparent, otherwise won't see the background
+  
+  width: 700px;
+  height: 60px;
+  box-sizing: border-box;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 65px;
+  flex-shrink: 0;
+}
