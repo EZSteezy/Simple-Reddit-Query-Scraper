@@ -3,6 +3,7 @@ let queryArr = [];
 
 $('#submitBtn').on('click', getStr);
 $('#submitBtn2').on('click', postQuery);
+$('#submitBtn3').on('click', deleteQuery);
 
 function getStr() {
   $(document).ready(function () {
@@ -32,14 +33,15 @@ function postQuery() {
       console.log(response);
       console.log(data);
       console.log(query);
+      location.reload()
       // handle the response from the server here
     },
     error: function(xhr, status, error) {
       console.log("Error: " + error);
     }
   });
-}
 
+}
 
 function getQueries() {
   const savedQueries = {
@@ -63,6 +65,7 @@ function getQueries() {
     })
     console.log(queryArr)
   })
+  
 }
 
 getQueries()
