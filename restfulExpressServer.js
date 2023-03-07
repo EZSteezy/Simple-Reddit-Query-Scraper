@@ -79,14 +79,14 @@ app.get('/api/queries/:id', (req, res, next) => {
 // POST to /movies - Create a movie
 app.post('/api/queries', (req, res, next) => {
   const {query} = (req.body);
-  console.log("Request body query", query);
-  // check request data - if everything exists and score is a number
+  console.log("Request body", query);
+  // check request data - if everything exists
   if (query){
     pool.query('INSERT INTO queries (query) VALUES ($1) RETURNING *', [query], (err, data) => {
-      const query = data.rows[0];
-      console.log("Created query: ", query);
-      if (query){
-        return res.send(query);
+      const newQuery = data.rows[0];
+      console.log("Created newQuery: ", newQuery);
+      if (newQuery){
+        return res.send(newQuery);
       } else {
         return next(err);
       }
