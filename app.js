@@ -1,68 +1,11 @@
 let inputStr;
 let queryArr = [];
+let allResultsCount = 0;
 
 $('#submitBtn').on('click', getStr);
 $('#submitBtn2').on('click', postQuery);
 $('#submitBtn3').on('click', deleteQuery);
-
-function getStr() {
-  $(document).ready(function () {
-    $('body2').empty()
-    //inputStr = $("#searchInput").val();
-    // for each table result from db queries saved, perform below func
-    for (let i = 0; i < queryArr.length; i++) {
-      inputStr = queryArr[i];
-      getResults()
-    }
-    //getResults()
-  });
-};
-
-function postQuery() {
-  var query = $("#queryInput").val();
-  // define the data to be sent in the post request as a raw JSON object
-  var data = JSON.stringify({ "query": query });
-  // send the post request with the data
-
-  $.post({
-    url: "https://query-page.onrender.com/api/queries/",
-    data: data,
-    contentType: "application/json",
-    dataType: "json",
-    success: function (response) {
-      console.log(response);
-      console.log(data);
-      console.log(query);
-      location.reload()
-      // handle the response from the server here
-    },
-    error: function (xhr, status, error) {
-      console.log("Error: " + error);
-    }
-  });
-
-}
-
-function deleteQuery() {
-  var queryId = $("#queryInput").val();
-  // define the data to be sent in the post request as a raw JSON object
-  // send the post request with the data
-
-  $.ajax({
-    url: "https://query-page.onrender.com/api/queries/" + queryId,
-    type: "DELETE",
-    success: function (response) {
-      console.log(response);
-      console.log(queryId);
-      location.reload()
-      // handle the response from the server here
-    },
-    error: function (xhr, status, error) {
-      console.log("Error: " + error);
-    }
-  });
-
-}
+getQueries()
 
 function getQueries() {
   const savedQueries = {
@@ -90,9 +33,57 @@ function getQueries() {
 
 }
 
-getQueries()
+function getStr() {
+  $(document).ready(function () {
+    $('body2').empty()
+    for (let i = 0; i < queryArr.length; i++) {
+      inputStr = queryArr[i];
+      getResults(inputStr)
+    }
+  });
+};
 
-function getResults() {
+function postQuery() {
+  var query = $("#queryInput").val();
+  var data = JSON.stringify({ "query": query });
+
+  $.post({
+    url: "https://query-page.onrender.com/api/queries/",
+    data: data,
+    contentType: "application/json",
+    dataType: "json",
+    success: function (response) {
+      console.log(response);
+      console.log(data);
+      console.log(query);
+      location.reload()
+    },
+    error: function (xhr, status, error) {
+      console.log("Error: " + error);
+    }
+  });
+
+}
+
+function deleteQuery() {
+  var queryId = $("#queryInput").val();
+
+  $.ajax({
+    url: "https://query-page.onrender.com/api/queries/" + queryId,
+    type: "DELETE",
+    success: function (response) {
+      console.log(response);
+      console.log(queryId);
+      location.reload()
+    },
+    error: function (xhr, status, error) {
+      console.log("Error: " + error);
+    }
+  });
+
+}
+
+function getResults(inputStr) {
   const settings = {
     "async": true,
     "crossDomain": true,
@@ -104,39 +95,46 @@ function getResults() {
   $.get(settings, (data) => {
     let stringData = JSON.stringify(data);
     let results = JSON.parse(stringData);
-    console.log(results);
+    allResultsCount++;
+    // Create a new div to hold all the results
+    const allResultsId = 'allResults-' + inputStr + '-' + allResultsCount;
+    const $allResults = $('<div>', { id: allResultsId, class: 'allResults' });
+    $allResults.append('<p>Results for: ' + inputStr + '</p>');
 
     $.each(results['data']['children'], function (i) {
 
-      $(document).ready(function () {
-        let id = results['data']['children'][i]['data']['id']
-        jQuery('<div/>', {
-          id: id,
-          class: "showclass",
-          text: results['data']['children'][i]['data']['title']
-        }).appendTo('body2');
-
-        jQuery('<div/>', {
-          id: 'morename' + id,
-          class: 'moreclass',
-          text: 'view here...'
-        }).appendTo($('#' + id));
-
-        $('#morename' + id).contents().wrap('<a href=https://www.reddit.com/' + results['data']['children'][i]['data']['permalink'] + '" target="_blank"></a>');
-
-        let utcSeconds = results['data']['children'][i]['data']['created']
-        let newDate = new Date(0);
-        newDate.setUTCSeconds(utcSeconds)
-
-        jQuery('<div/>', {
-          id: "channelname" + i,
-          class: "channelclass",
-          text: 'Time/Date Posted: ' + newDate
-        }).appendTo($("#" + id));
-
+      // Create a new div for each individual result
+      const $resultDiv = $('<div>', {
+        id: results['data']['children'][i]['data']['id'],
+        class: "titleclass",
+        text: results['data']['children'][i]['data']['title']
       });
 
+      // Append the "view here..." link to the individual result div
+      const $moreLink = $('<div>', {
+        id: 'morename' + results['data']['children'][i]['data']['id'],
+        class: 'moreclass',
+        text: 'view here...'
+      });
+      $moreLink.appendTo($resultDiv);
+      $moreLink.contents().wrap('<a href=https://www.reddit.com/' + results['data']['children'][i]['data']['permalink'] + '" target="_blank"></a>');
+
+      // Append the time/date posted to the individual result div
+      const utcSeconds = results['data']['children'][i]['data']['created'];
+      const newDate = new Date(0);
+      newDate.setUTCSeconds(utcSeconds);
+      const $postTime = $('<div>', {
+        id: "postTime" + i,
+        class: "postTimeclass",
+        text: 'Time/Date Posted: ' + newDate
+      });
+      $postTime.appendTo($resultDiv);
+
+      // Append the individual result div to the "all results" div
+      $resultDiv.appendTo($allResults);
     });
 
+    // Append the "all results" div to the document
+    $allResults.appendTo('body2');
   });
 }
