@@ -4,6 +4,5 @@ CREATE TABLE queries (
 );
 
 INSERT INTO queries (query) VALUES
-  ('mcconnell'),
-  ('mafb'),
-  ('mcconnell afb');
+  ('hack reactor'),
+  ('galvanize vettec');
