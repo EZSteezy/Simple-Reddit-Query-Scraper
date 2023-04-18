@@ -7,6 +7,7 @@ const app = express();
 const port = process.env.PORT || 8000;
 const bodyParser = require('body-parser');
 
+
 app.use(bodyParser.json());
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -45,7 +46,6 @@ app.get('/api/queries/:id', (req, res, next) => {
     res.status(404).send("No query found with that ID");
   }
   console.log("query ID: ", id);
-
   pool.query('SELECT * FROM queries WHERE id = $1', [id], (err, result) => {
     if (err) {
       return next(err);
@@ -79,7 +79,7 @@ app.post('/api/queries', (req, res, next) => {
   }
 });
 
-app.patch('/api/queries/:id', (req, res, next) => {
+app.patch('/api/queries/:id', (req, res, next) => { // currently not in use, reeee.
   const id = Number.parseInt(req.params.id);
   const { name } = req.body;
   if (!Number.isInteger(id)) {

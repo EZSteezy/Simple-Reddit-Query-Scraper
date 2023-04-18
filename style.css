@@ -8,16 +8,16 @@ body {
 }
 
 .allResults {
-width: 600px;
-font-family: Arial, Helvetica, sans-serif;
-background-color: rgb(92, 212, 108);
-opacity: 80%;
-margin: auto;
-margin-top: 30px;
-border-radius: 20px;
-border: 5px solid;
-padding: 2px;
-text-align: center;
+  width: 600px;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(92, 212, 108);
+  opacity: 80%;
+  margin: auto;
+  margin-top: 30px;
+  border-radius: 20px;
+  border: 5px solid;
+  padding: 2px;
+  text-align: center;
 }
 
 #main {
@@ -64,7 +64,8 @@ text-align: center;
 
 .titleclass {
   width: 400px;
-  font-family: Copperplate, "Copperplate Gothic Light", fantasy;;
+  font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+  ;
   background-color: rgb(255, 255, 255);
   opacity: 80%;
   margin: auto;
@@ -83,7 +84,7 @@ text-align: center;
   margin: auto;
   margin-top: 0px;
   border-radius: 00px;
-  border: 0px ;
+  border: 0px;
   padding: 0px;
   text-align: center;
 }
@@ -92,10 +93,10 @@ text-align: center;
   background: url(https://thumbs.gfycat.com/EarlyAntiqueIbizanhound-max-1mb.gif);
   background-size: cover;
   background-position: center;
-  
+
   -webkit-background-clip: text;
   color: transparent; // set to transparent, otherwise won't see the background
-  
+
   width: 700px;
   height: 60px;
   box-sizing: border-box;
@@ -104,4 +105,31 @@ text-align: center;
   text-align: center;
   line-height: 65px;
   flex-shrink: 0;
+}
+
+#my-container {
+  width: 400px;
+  height: auto;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.tabs-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.tab {
+  width: 100px;
+  height: 50px;
+  background-color: gray;
+  color: white;
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
+}
+
+.tab:hover {
+  background-color: black;
 }
