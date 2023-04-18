@@ -2,9 +2,11 @@
   "name": "fs-pet-store",
   "version": "0.1.0",
   "description": "A small server app to demonstrate CRUD over an HTTP API",
-  "main": "restfulExpressServer.js",
+  "main": "index.html",
   "scripts": {
-    "start": "nodemon"
+    "start": "nodemon",
+    "snowpack": "snowpack dev"
+
   },
   "repository": {
     "type": "git",
@@ -33,6 +35,7 @@
     "pg": "^8.10.0",
     "pool": "^0.4.1",
     "postgres": "^3.3.3",
+    "snowpack": "^3.8.8",
     "sudo": "^1.0.3"
   }
 }
